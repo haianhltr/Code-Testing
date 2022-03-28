@@ -1,37 +1,35 @@
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        ArrayList<Integer>[] catalog = new ArrayList[numCourses];
-        int [] prereqs = new int [numCourses];
+        ArrayList<Integer> [] catalog = new ArrayList[numCourses];
+        int [] prereqs = new int [numCourses]; 
+        for(int k = 0 ; k < catalog.length; k++)
+        {
+            catalog[k] = new ArrayList<Integer>();
+        }
         
-        for(int i = 0; i<catalog.length;i++)catalog[i] = new ArrayList<Integer>();
-        
-        for(int[]edge : prerequisites)
+        for(int [] edge : prerequisites)
         {
             int a = edge[0];
             int b = edge[1];
-            // them vao list nhung lop ma lop co lam prereqs
             catalog[b].add(a);
-            //dem so prereqs can cho 1 class
             prereqs[a]++;
+            
         }
-        
         Queue<Integer> queue = new LinkedList();
         for(int k = 0; k < numCourses; k++)
         {
             if(prereqs[k] == 0)
-            {
-                queue.add(k);
-            }
+            queue.add(k);
         }
-        
+            
         while(!queue.isEmpty())
         {
-            int course = queue.poll();
+            int classTaking = queue.poll();
             numCourses--;
-            for(int next : catalog[course])
+            for(int n : catalog[classTaking])
             {
-                prereqs[next]--;
-                if(prereqs[next] == 0) queue.add(next);
+                prereqs[n]--;
+                if(prereqs[n] == 0) queue.add(n);
             }
         }
         return numCourses == 0;
