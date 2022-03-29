@@ -23,32 +23,33 @@ class Node {
 
 class Solution {
     public Node connect(Node root) {
-        if(root == null) return null;
-        Queue<Node> queue = new LinkedList();
-        queue.add(root);
-        while(!queue.isEmpty())
-        {
-            Node max = new Node(0);
-            int size = queue.size();
-            for(int k = 0; k  <size ; k++)
-            {
-                
-                Node temp = queue.poll();
-                if(k==0){
-                    temp.next = null;
-                    max = temp;
-                    }
-                else{
-                    temp.next = max;
-                    max = temp;
-                }
-                if(temp.right != null) queue.add(temp.right);
-                if(temp.left != null) queue.add(temp.left);
-               
-               
-            }
-           
+    if (root == null) return root;
+
+    Queue<Node> q = new LinkedList<>();
+    int depth = 0;  // current depth level in binary tree
+    q.add(root);    // adding root of the binary tree
+    while (!q.isEmpty()) {
+        Node prev = q.poll();   // take out the left most element of current depth
+        // adding their children into the queue
+        if (prev.left != null && prev.right != null) {
+            q.add(prev.left);
+            q.add(prev.right);
         }
-        return root;
+        // depth "d" has 2^d number of nodes
+        for (int i = 1; i < (1 << depth); i++) {
+            Node curr = q.poll();
+            prev.next = curr;   // adding next to previous node in current depth level
+            prev = curr;        // making current as previous
+            // adding children into the queue
+            if (prev.left != null && prev.right != null) {
+                q.add(prev.left);
+                q.add(prev.right);
+            }
+        }
+        // going one level deep
+        depth++;
     }
+    // returning root of the binary tree
+    return root;
+}
 }
