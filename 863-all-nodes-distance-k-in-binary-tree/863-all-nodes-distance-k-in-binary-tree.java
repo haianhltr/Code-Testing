@@ -37,9 +37,7 @@ class Solution {
                     hash.get(temp.right).add(temp);
                 }
             }
-        }
-        
-        
+        }    
         Set<TreeNode> been = new HashSet();
         queue.add(target);
          while(edge > 0 && !queue.isEmpty())
@@ -50,7 +48,6 @@ class Solution {
                 {
                 TreeNode temp = queue.poll();
                 been.add(temp);
-                System.out.println(temp.val);
                 for(TreeNode t : hash.get(temp))
                 {
                     if(!been.contains(t))
