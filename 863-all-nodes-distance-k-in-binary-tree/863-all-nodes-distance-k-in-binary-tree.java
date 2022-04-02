@@ -1,75 +1,75 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
 class Solution {
-public List distanceK(TreeNode root, TreeNode target, int k)
-{
-    //hashmap to store parent of each node
-    HashMap<TreeNode,TreeNode> parent_track=new HashMap<>();
-    //helper function to calculate parent of each node
-    store_parents(root,parent_track);
-  
-    Queue<TreeNode> q = new LinkedList<>();
-    //visited hashmap 
-    HashMap<TreeNode,Boolean> visited = new HashMap<>();
-    q.offer(target);
-    visited.put(target,true);
-    int distance = 0;  //keeps track of distance
-    //bfs traversal on left child, right child and parent
-    while(!q.isEmpty())
-    {
-        if(distance==k)
-            break;
-        int q_size = q.size();
-        for(int i=0;i<q_size;i++)
+    public List<Integer> distanceK(TreeNode root, TreeNode target, int edge) {
+        List<Integer> list = new ArrayList();
+        if(root == null) return null;
+        Queue<TreeNode> queue = new LinkedList();
+        queue.add(root);
+        Map<TreeNode, List<TreeNode>> hash = new HashMap();
+        while(!queue.isEmpty())
         {
-            TreeNode temp=q.poll();
-            if(temp.left!=null && visited.get(temp.left)==null)
+            int size = queue.size();
+            for(int k =0; k < size ;k++)
             {
-                q.offer(temp.left);
-                visited.put(temp.left,true);
+                TreeNode temp = queue.poll();
+                if(!hash.containsKey(temp)) hash.put(temp, new ArrayList<TreeNode>());
+                if(temp.left != null)
+                {
+                    queue.add(temp.left);
+                    hash.put(temp.left, new ArrayList<TreeNode>());
+                    hash.get(temp).add(temp.left);
+                    hash.get(temp.left).add(temp);
+                }
+                
+                if(temp.right != null)
+                {
+                    queue.add(temp.right);
+                    hash.put(temp.right, new ArrayList<TreeNode>());
+                    hash.get(temp).add(temp.right);
+                    hash.get(temp.right).add(temp);
+                }
             }
-            if(temp.right!=null && visited.get(temp.right)==null)
-            {
-                q.offer(temp.right);
-                visited.put(temp.right,true);
+        }    
+        Set<TreeNode> been = new HashSet();
+        queue.add(target);
+         while(edge > 0 && !queue.isEmpty())
+         {
+                edge--;
+                int size = queue.size();
+                for(int k = 0; k < size ;k++)
+                {
+                TreeNode temp = queue.poll();
+                been.add(temp);
+                for(TreeNode t : hash.get(temp))
+                {
+                    if(!been.contains(t))
+                    {
+                        queue.add(t);
+                    }
+                }
+                }
+              
             }
-            if(parent_track.get(temp)!=null && visited.get(parent_track.get(temp))==null)
-            {
-                q.offer(parent_track.get(temp));
-                visited.put(parent_track.get(temp),true);
-            }
-        }
-        distance++;
-    }
-    //storing result at last
-    List<Integer> result =new ArrayList<Integer>();
-    while(!q.isEmpty())
-    {
-        result.add(q.poll().val);
-    }
-    return result;
-}
+         
+        
+       
+        
+      while(!queue.isEmpty())
+      {
+          list.add(queue.poll().val);
+      }
+        
+        
     
-public void store_parents(TreeNode root,HashMap<TreeNode,TreeNode> parent_track)
-{
-    Queue<TreeNode> q=new LinkedList<>();
-    q.offer(root);
-    while(!q.isEmpty())
-    {
-        int q_size = q.size();
-        for(int i=0;i<q_size;i++)
-        {
-            TreeNode temp = q.poll();
-            if(temp.left!=null)
-            {
-                q.offer(temp.left);
-                parent_track.put(temp.left,temp);
-            }
-            if(temp.right!=null)
-            {
-                q.offer(temp.right);
-                parent_track.put(temp.right,temp);
-            }
-        }
+        return list;
+        
     }
-}
-
 }
