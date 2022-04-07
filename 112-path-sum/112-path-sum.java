@@ -14,17 +14,9 @@
  * }
  */
 class Solution {
-    public boolean check = false;
     public boolean hasPathSum(TreeNode root, int targetSum) {
-        DFS(root,targetSum);
-            return check;
-    }
-    private void DFS(TreeNode root, int sum)
-    {
-        if(root == null) return;
-        sum -= root.val;
-        if(root.left == null && root.right == null && sum == 0) check = true;
-        DFS(root.left,sum);
-        DFS(root.right,sum);
+        if(root == null) return false;
+        if(root.left == null && root.right == null && targetSum - root.val == 0) return true;
+        return hasPathSum(root.left, targetSum - root.val) || hasPathSum(root.right,targetSum- root.val);
     }
 }
