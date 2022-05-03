@@ -1,14 +1,12 @@
-class Solution {
-    public int missingNumber(int[] nums) {
-        
-        int sum = (nums.length) * (nums.length + 1)/2;
-        for(int k = 0; k < nums.length; k++)
-        {
-            sum = sum - nums[k];
-        }
-        
-        return sum;
-        
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var missingNumber = function(nums) {
+    let sum = nums.length * (nums.length+1) / 2;
+    for(let k = 0; k < nums.length ; k++)
+    {
+         sum -=  nums[k];
     }
-}
-
+    return sum;
+};
