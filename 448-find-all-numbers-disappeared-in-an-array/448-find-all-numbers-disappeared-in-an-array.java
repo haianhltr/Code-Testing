@@ -1,4 +1,5 @@
 class Solution {
+    //done in 15 minutes
     public List<Integer> findDisappearedNumbers(int[] nums) {
         List<Integer> list = new ArrayList();
         for(int k = 0; k < nums.length; k++)
