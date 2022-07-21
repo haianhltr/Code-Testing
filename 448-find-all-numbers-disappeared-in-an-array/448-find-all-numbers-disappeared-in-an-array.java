@@ -1,7 +1,7 @@
 class Solution {
     //done in 15 minutes
     public List<Integer> findDisappearedNumbers(int[] nums) {
-        List<Integer> list = new ArrayList();
+        List<Integer> listOfNum = new ArrayList();
         for(int k = 0; k < nums.length; k++)
         {
             if(nums[Math.abs(nums[k])-1] > 0)
@@ -15,10 +15,10 @@ class Solution {
         {
             if(nums[k] > 0)
             {
-              list.add(k+1);
+              listOfNum.add(k+1);
             }
         }
-        return list;
+        return listOfNum;
     }
 }
 
