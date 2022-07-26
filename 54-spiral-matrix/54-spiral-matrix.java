@@ -21,7 +21,7 @@ class Solution {
         
         right--;
             
-        if(left >= right || top >= bottom) break;
+               if(left >= right || top >= bottom) break;
         
         for(int k = right-1; k >= left; k-- )
         {
@@ -29,7 +29,7 @@ class Solution {
         }
         
         bottom--;
-        
+      
         
         for(int k  = bottom-1; k >= top; k--)
         {
@@ -38,8 +38,9 @@ class Solution {
         
         left++;
         
-        
+   
         }
+        
         
         return list;
         
@@ -50,3 +51,7 @@ class Solution {
 // 00 01 02
 // 10 11 12
 // 20 21 22
+
+// 1 2  3  4
+// 5 6  7  8
+// 9 10 11 12
