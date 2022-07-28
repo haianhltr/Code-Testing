@@ -15,9 +15,34 @@
  */
 class Solution {
     public int minDepth(TreeNode root) {
-     if(root == null) return 0;
-     int left = minDepth(root.left);
-     int right = minDepth(root.right);
-    return (root.left == null || root.right == null) ? left + right +1 : Math.min(left,right)+1;
+    if(root == null) return 0;
+        Queue<TreeNode> queue = new LinkedList();
+        queue.add(root);
+        int level = 0;
+        while(!queue.isEmpty())
+        {
+            level++;
+            int size = queue.size();
+         
+            for(int k =0; k < size; k++)
+            {
+                   TreeNode current = queue.poll();
+                if(current.left == null && current.right == null)
+                {
+                    return level;
+                }
+                if(current.left != null) queue.add(current.left);
+                if(current.right != null) queue.add(current.right);
+            }
+        }
+        
+        return level;
     }
 }
+//     // 1
+// // 2      3
+//  4   5
+
+//     3
+// 9.     20
+// n. n.  15 17        
