@@ -18,23 +18,19 @@ class Solution {
         List<Double> list = new ArrayList();
         Queue<TreeNode> queue = new LinkedList();
         queue.add(root);
-        
-        
         while(!queue.isEmpty())
         {
-            double total = 0;
             int size = queue.size();
+            double avg = 0;
             for(int k = 0; k < size; k++)
             {
-                  TreeNode temp = queue.poll();
-                  total += temp.val;
-                  if(temp.left != null) queue.add(temp.left);
-                  if(temp.right != null) queue.add(temp.right);
-                
+                TreeNode current = queue.poll();
+                if(current.left != null) queue.add(current.left);
+                if(current.right != null) queue.add(current.right);
+                avg += current.val;
             }
-            list.add(total/size);
+            list.add(avg/size);
         }
-        
         return list;
     }
 }
