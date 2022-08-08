@@ -7,12 +7,10 @@ class Solution {
             if(nums[k] == 0 || Math.abs(nums[k]) >nums.length) continue;
             if(nums[Math.abs(nums[k])-1] == 0)
             {
-                System.out.println(nums[k]);
-                nums[Math.abs(nums[k])-1] = -999;
+                nums[Math.abs(nums[k])-1] = (nums.length+1)*-1;
             }
             else if(nums[Math.abs(nums[k])-1] > 0)
             {
-                System.out.println(nums[k]);
                 nums[Math.abs(nums[k])-1] *= -1;
             }
         
