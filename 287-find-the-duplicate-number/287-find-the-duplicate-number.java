@@ -10,8 +10,6 @@ class Solution {
                 return Math.abs(nums[k]);
             }
         }
-        return -1;
+        return 0;
     }
 }
-
-
