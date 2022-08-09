@@ -20,14 +20,14 @@ class Node {
 
 class Solution {
     public Node cloneGraph(Node node) {
-    if(node == null) return null;
-        Queue<Node> queue = new LinkedList();
-        queue.add(node);
+        if(node == null) return null;
         HashMap<Node,Node> hash = new HashMap();
         hash.put(node, new Node(node.val));
+        Queue<Node> queue = new LinkedList();
+        queue.add(node);
         while(!queue.isEmpty())
         {
-            Node current  = queue.poll();
+            Node current = queue.poll();
             for(Node neighbor : current.neighbors)
             {
                 if(!hash.containsKey(neighbor))
@@ -35,9 +35,11 @@ class Solution {
                     hash.put(neighbor, new Node(neighbor.val));
                     queue.add(neighbor);
                 }
+                
                 hash.get(current).neighbors.add(hash.get(neighbor));
             }
         }
         return hash.get(node);
+        
     }
 }
