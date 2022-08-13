@@ -1,56 +1,45 @@
 class Solution {
-    public boolean canFinish(int numCourses, int[][] prerequisites) {
-        ArrayList<Integer> [] catalog = new ArrayList[numCourses];
-        int [] prereqs = new int [numCourses];
-        for(int k = 0 ; k < catalog.length; k++)
+    public boolean canFinish(int n, int[][] prerequisites) {
+        int [] count = new int [n];
+        ArrayList<Integer> [] prereqs = new ArrayList [n];
+        for(int k = 0; k < n; k++)
         {
-            catalog[k] = new ArrayList<Integer>();
+            prereqs[k] = new ArrayList<Integer>();
         }
         
-        for(int [] edge : prerequisites)
+        
+        for(int [] current : prerequisites)
         {
-            
-            int a =edge[0];
-            int b = edge[1];
-            prereqs[a]++;
-            catalog[b].add(a);
+         int a = current[0];
+         int b = current[1];
+         count[a]++;
+         prereqs[b].add(a);   
         }
         
         Queue<Integer> queue = new LinkedList();
-        for(int k = 0; k < numCourses; k++)
+        
+        
+        for(int k = 0; k < n ; k++)
         {
-            if(prereqs[k]==0) queue.add(k);
+            if(count[k] == 0)
+            queue.add(k);
         }
         
         while(!queue.isEmpty())
         {
             int current = queue.poll();
-            numCourses--;
-            for(int next : catalog[current])
+            n--;
+            for(int c : prereqs[current])
             {
-                prereqs[next]--;
-                if(prereqs[next] == 0)
+                count[c]--;
+             
+                if(count[c] == 0)
                 {
-                    queue.add(next);
+                    queue.add(c);
                 }
             }
+            
         }
-        return numCourses == 0;
-
+        return n==0 ? true : false;
     }
 }
-
-// 3,1
-// 3,2
-// 1,2
-
-// 3 1
-// 1 0
-// 2 0
-    
-// [1] {3}
-// [2] {1,3}
-
-// 2 1
- 
-    
