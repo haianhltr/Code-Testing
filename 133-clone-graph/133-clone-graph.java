@@ -21,25 +21,25 @@ class Node {
 class Solution {
     public Node cloneGraph(Node node) {
         if(node == null) return null;
-        HashMap<Node,Node> hash = new HashMap();
+        Map<Node, Node> hash = new HashMap();
         hash.put(node, new Node(node.val));
         Queue<Node> queue = new LinkedList();
         queue.add(node);
         while(!queue.isEmpty())
         {
             Node current = queue.poll();
-            for(Node neighbor : current.neighbors)
+            for(Node n : current.neighbors)
             {
-                if(!hash.containsKey(neighbor))
-                {
-                    hash.put(neighbor, new Node(neighbor.val));
-                    queue.add(neighbor);
-                }
-                
-                hash.get(current).neighbors.add(hash.get(neighbor));
+               if(!hash.containsKey(n))
+               {
+                   hash.put(n, new Node(n.val));
+                   queue.add(n);
+               }
+                hash.get(current).neighbors.add(hash.get(n));
             }
+            
+           
         }
         return hash.get(node);
-        
     }
 }
