@@ -1,30 +1,18 @@
 class Solution {
-        int [][] heights;
     public List<List<Integer>> pacificAtlantic(int[][] heights) {
-        this.heights = heights;
         List<List<Integer>> list = new ArrayList();
-        Queue<int []> queue = new LinkedList();
-        //declare a queue
-        //pacific, addtop and addside, do bsf
+        boolean [][] pacific = new boolean[heights.length][heights[0].length];
+        boolean [][] atlantic = new boolean [heights.length][heights[0].length];
+        Queue<int []> pacificQ = new LinkedList();
+        Queue<int []> atlanticQ = new LinkedList();
+        fill(pacificQ, pacific, 0,0);
+        BFS(pacificQ, pacific, heights);
+        fill(atlanticQ, atlantic,heights.length-1,heights[0].length-1);
+        BFS(atlanticQ,atlantic, heights);
         
-        int m = heights.length;
-        int n = heights[0].length;
-     
-        addTop(queue,0,n);
-        addSide(queue,0,m);
-        
-        //create a function that return a boolean array after doing BFS and 
-        //return it back to pacific
-        boolean [][] pacific = BFS(queue,m,n);
-        
-        //atlantic
-        addTop(queue,m-1,n);
-        addSide(queue,n-1,m);
-        boolean [][] atlantic = BFS(queue,m,n);
-        
-        for(int k = 0; k < m; k++)
+        for(int k = 0; k < heights.length; k++)
         {
-            for(int j = 0; j < n; j++)
+            for(int j = 0; j < heights[0].length; j++)
             {
                 if((pacific[k][j] == true) && (atlantic[k][j] == true))
                 {
@@ -32,64 +20,53 @@ class Solution {
                 }
             }
         }
+     
         return list;
+    }
+    
+    public void fill(Queue<int []> queue, boolean [][] ocean, int maxTop, int maxSide)
+    {
+        for(int k = 0; k < ocean[0].length; k++)
+        {
+            
+            queue.add(new int [] {maxTop,k});
       
-
-    }
-                                           
-    private boolean [][] BFS(Queue <int [] > queue, int m, int n)
-    {
-        boolean [][] result = new boolean[m][n];
-        while(!queue.isEmpty())
-        {
-            //dequeue the first one and got temp [0,0]
-            int [] temp = queue.poll();
-            int row = temp[0];
-            int column = temp[1];
-            int currentNum = heights[row][column];
-            
-            if(result[row][column] == true) continue;
-            result[row][column] = true;
-            
-            if(row +1 < m && currentNum <= heights[row+1][column])
-            {
-                queue.add(new int [] {row+1,column});
-            }
-            
-             if(row - 1 >= 0 && currentNum <= heights[row-1][column])
-            {
-                queue.add(new int [] {row-1,column});
-            }
-            
-            
-             if(column +1 < n && currentNum <= heights[row][column+1])
-            {
-                queue.add(new int [] {row,column+1});
-            }
-            
-             if(column -1 >= 0 && currentNum <= heights[row][column-1])
-            {
-                queue.add(new int [] {row,column-1});
-            }
-            
         }
-                          return result;
-        
-    }
-    
-    private void addTop(Queue<int []> queue,int rowstart, int end)
-    {
-        for(int k = 0; k < end; k++)
+        for(int k =0 ; k < ocean.length;k++)
         {
-            queue.add(new int [] {rowstart,k});
+      
+            queue.add(new int [] {k, maxSide});
+   
         }
     }
-    
-      private void addSide(Queue<int []> queue,int columnstart, int end)
+    public void BFS(Queue<int []> queue, boolean[][] oceanB,int [][] ocean)
     {
-        for(int k = 0; k < end; k++)
+        while(!queue.isEmpty()){
+        int [] current = queue.poll();
+        int a= current[0];
+        int b = current[1];
+        if(oceanB[a][b] == true)
         {
-            queue.add(new int [] {k,columnstart});
+            continue;
+        }
+        oceanB[a][b] = true;
+            
+        if(a+1 < ocean.length && ocean[a+1][b] >= ocean[a][b])
+        {
+            queue.add(new int [] {a+1, b});
+        }
+        if(a-1 >= 0 && ocean[a-1][b] >= ocean[a][b])
+        {
+            queue.add(new int []{a-1,b});
+        }
+        if(b-1 >= 0 && ocean[a][b-1] >= ocean[a][b])
+        {
+            queue.add(new int [] {a, b-1});
+        }
+        if(b+1 < ocean[0].length && ocean[a][b+1] >= ocean [a][b])
+        {
+            queue.add(new int [] {a, b+1});
+        }
         }
     }
 }
