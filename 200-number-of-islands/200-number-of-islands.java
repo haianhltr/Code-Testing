@@ -1,25 +1,23 @@
 class Solution {
     public int numIslands(char[][] grid) {
-        Queue<int []> queue = new LinkedList();
         int count = 0;
         for(int k = 0; k < grid.length; k++)
         {
-            for(int j = 0; j < grid[0].length;j++)
+            for(int j = 0; j < grid[0].length; j++)
             {
                 if(grid[k][j] == '1')
                 {
-                    queue.add(new int [] {k,j});
-                    fill(queue,grid, k, j);
+                    BFS(k, j,grid);
                     count++;
                 }
             }
         }
         return count;
-        
     }
     
-    public void fill(Queue<int[]> queue, char[][]grid, int k , int j)
-    {
+    public void BFS(int k, int j, char [][] grid){
+        Queue<int []> queue = new LinkedList();
+        queue.add(new int [] {k,j});
         while(!queue.isEmpty())
         {
             int [] current = queue.poll();
@@ -35,14 +33,15 @@ class Solution {
             {
                 queue.add(new int [] {x-1,y});
             }
-            if(y+1 < grid[0].length && grid[x][y+1] == '1')
+             if(y+1 < grid[0].length && grid[x][y+1] == '1')
             {
-                queue.add(new int []{x, y+1});
+                queue.add(new int [] {x,y+1});
             }
             if(y-1 >= 0 && grid[x][y-1] == '1')
             {
                 queue.add(new int [] {x,y-1});
             }
+            
         }
     }
 }
