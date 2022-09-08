@@ -1,7 +1,7 @@
 class Solution {
     public int[] findOrder(int n, int[][] prerequisites) {
 
-        List<Integer> list = new ArrayList();
+       int [] result = new int [n];
         ArrayList<Integer> [] prereqs = new ArrayList[n];
         int [] count = new int [n];
         for(int k = 0 ; k < n; k++)
@@ -25,10 +25,11 @@ class Solution {
         }
         
         //BFS
+        int k = 0;
         while(!queue.isEmpty())
         {
             int current = queue.poll();
-            list.add(current);
+            result[k++] = current;
             n--;
             for(int neighbor : prereqs[current])
             {
@@ -41,11 +42,7 @@ class Solution {
             }
         }
         
-        int [] result = new int [list.size()];
-        for(int k = 0; k < list.size(); k++)
-        {
-            result[k] = list.get(k);
-        }
+       
         return n == 0 ? result : new int [] {};
         
     }
