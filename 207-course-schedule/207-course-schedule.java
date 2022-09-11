@@ -1,7 +1,6 @@
 class Solution {
     public boolean canFinish(int n, int[][] prerequisites) {
-        ArrayList<Integer> [] prereqs = new ArrayList[n];
-
+        ArrayList<Integer> [] prereqs = new ArrayList [n];
         int [] count = new int [n];
         for(int k = 0; k < n; k++)
         {
@@ -10,10 +9,10 @@ class Solution {
         
         for(int [] current : prerequisites)
         {
-            int a  = current[0];
+            int a = current[0];
             int b = current[1];
-            prereqs[b].add(a);
             count[a]++;
+            prereqs[b].add(a);
         }
         
         Queue<Integer> queue = new LinkedList();
@@ -27,21 +26,17 @@ class Solution {
         
         while(!queue.isEmpty())
         {
-            int current = queue.poll();
+            int temp = queue.poll();
             n--;
-            for(int c : prereqs[current])
+            for(int neighbor : prereqs[temp])
             {
-                count[c]--;
-                if(count[c] == 0)
+                count[neighbor]--;
+                if(count[neighbor] == 0)
                 {
-                    queue.add(c);
+                    queue.add(neighbor);
                 }
             }
         }
-        
         return n==0;
-    
-        
-        
     }
 }
