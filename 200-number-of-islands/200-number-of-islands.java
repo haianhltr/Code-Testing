@@ -6,42 +6,45 @@ class Solution {
             for(int j = 0; j < grid[0].length; j++)
             {
                 if(grid[k][j] == '1')
-                {
-                    BFS(k, j,grid);
                     count++;
-                }
+                BFS(grid, k,j);
             }
         }
         return count;
+        
     }
     
-    public void BFS(int k, int j, char [][] grid){
-        Queue<int []> queue = new LinkedList();
-        queue.add(new int [] {k,j});
-        while(!queue.isEmpty())
-        {
-            int [] current = queue.poll();
-            int x = current[0];
-            int y = current[1];
-            if(grid[x][y] == '0') continue;
-            grid[x][y] = '0';
-            if(x+1 < grid.length && grid[x+1][y] == '1')
+    
+    public void BFS(char [][] grid, int k, int j )
+    {
+            Queue<int []> queue = new LinkedList();
+            queue.add(new int [] {k,j});
+            while(!queue.isEmpty())
             {
-                queue.add(new int [] {x+1,y});
+                int [] current = queue.poll();
+                int a = current[0];
+                int b = current[1];
+                if(grid[a][b] == '0')
+                {
+                    continue;
+                }
+                grid[a][b] = '0';
+                if(a+1 < grid.length && grid[a+1][b] == '1')
+                {
+                    queue.add(new int [] {a+1,b});
+                }
+                if(a-1 >= 0 && grid[a-1][b] == '1')
+                {
+                    queue.add(new int [] {a-1,b});
+                }
+                if(b-1 >= 0 && grid[a][b-1] == '1')
+                {
+                    queue.add(new int [] {a,b-1});
+                }
+                if(b+1 < grid[0].length && grid[a][b+1] == '1')
+                {
+                    queue.add(new int [] {a,b+1});
+                }
             }
-            if(x-1 >= 0 && grid[x-1][y] == '1')
-            {
-                queue.add(new int [] {x-1,y});
-            }
-             if(y+1 < grid[0].length && grid[x][y+1] == '1')
-            {
-                queue.add(new int [] {x,y+1});
-            }
-            if(y-1 >= 0 && grid[x][y-1] == '1')
-            {
-                queue.add(new int [] {x,y-1});
-            }
-            
-        }
     }
 }
