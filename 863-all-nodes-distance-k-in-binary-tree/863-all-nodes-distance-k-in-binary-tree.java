@@ -8,68 +8,68 @@
  * }
  */
 class Solution {
-    public List<Integer> distanceK(TreeNode root, TreeNode target, int edge) {
+    public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
         List<Integer> list = new ArrayList();
-        if(root == null) return null;
+        HashMap<TreeNode, List<TreeNode>> hash = new HashMap();
         Queue<TreeNode> queue = new LinkedList();
         queue.add(root);
-        Map<TreeNode, List<TreeNode>> hash = new HashMap();
         while(!queue.isEmpty())
         {
             int size = queue.size();
-            for(int k =0; k < size ;k++)
-            {
-                TreeNode temp = queue.poll();
-                if(!hash.containsKey(temp)) hash.put(temp, new ArrayList<TreeNode>());
-                if(temp.left != null)
+                while(size --> 0)
                 {
-                    queue.add(temp.left);
-                    hash.put(temp.left, new ArrayList<TreeNode>());
-                    hash.get(temp).add(temp.left);
-                    hash.get(temp.left).add(temp);
-                }
-                
-                if(temp.right != null)
-                {
-                    queue.add(temp.right);
-                    hash.put(temp.right, new ArrayList<TreeNode>());
-                    hash.get(temp).add(temp.right);
-                    hash.get(temp.right).add(temp);
-                }
-            }
-        }    
-        Set<TreeNode> been = new HashSet();
-        queue.add(target);
-         while(edge > 0 && !queue.isEmpty())
-         {
-                edge--;
-                int size = queue.size();
-                for(int k = 0; k < size ;k++)
-                {
-                TreeNode temp = queue.poll();
-                been.add(temp);
-                for(TreeNode t : hash.get(temp))
-                {
-                    if(!been.contains(t))
+                    TreeNode current = queue.poll();
+                    if(!hash.containsKey(current)) hash.put(current, new ArrayList<TreeNode>());
+                    if(current.left != null) 
                     {
-                        queue.add(t);
+                        hash.put(current.left, new ArrayList<TreeNode>());
+                        hash.get(current.left).add(current);
+                        queue.add(current.left);
+                        hash.get(current).add(current.left);
                     }
+                    if(current.right != null) 
+                    {
+                        
+                        hash.put(current.right, new ArrayList<TreeNode>());
+                        hash.get(current.right).add(current);
+                        queue.add(current.right);
+                        hash.get(current).add(current.right);
+                    }
+                    
                 }
-                }
-              
-            }
-         
-        
-       
-        
-      while(!queue.isEmpty())
-      {
-          list.add(queue.poll().val);
-      }
-        
+            
+        }
         
     
-        return list;
+       Set<TreeNode> seen = new HashSet();
+        queue.add(target);
         
+        while(k >0)
+        {
+            int size = queue.size();
+            k--;
+            for(int j = 0; j < size; j++)
+            {
+                    TreeNode current = queue.poll();
+                    seen.add(current);
+                    for(TreeNode b : hash.get(current))
+                    {
+                    if(!seen.contains(b))
+                    {
+                        queue.add(b);
+                    }
+                       
+                    }
+
+                    
+            }
+        }
+        
+        while(!queue.isEmpty()){
+           list.add(queue.poll().val);
+        }
+       
+        
+        return list;
     }
 }
