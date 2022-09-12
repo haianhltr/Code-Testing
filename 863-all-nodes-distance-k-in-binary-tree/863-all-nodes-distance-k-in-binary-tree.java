@@ -44,7 +44,7 @@ class Solution {
        Set<TreeNode> seen = new HashSet();
         queue.add(target);
         
-        while(k >0)
+        while(k > 0 && !queue.isEmpty())
         {
             int size = queue.size();
             k--;
