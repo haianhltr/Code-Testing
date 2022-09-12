@@ -1,4 +1,26 @@
-///DFS
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public Node left;
+    public Node right;
+    public Node next;
+
+    public Node() {}
+    
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val, Node _left, Node _right, Node _next) {
+        val = _val;
+        left = _left;
+        right = _right;
+        next = _next;
+    }
+};
+*/
+
 class Solution {
     public Node connect(Node root) {
         if(root == null) return null;
@@ -6,25 +28,17 @@ class Solution {
         queue.add(root);
         while(!queue.isEmpty())
         {
-            //create a node max to store the right-most node
-            Node max = new Node(0);
-            int size = queue.size();
-            for(int k = 0; k  <size ; k++)
-            {
-                
-                Node temp = queue.poll();
-                //since we starte from the right, the 
-                if(k==0){
-                    temp.next = null;
-                    max = temp;
-                    }
-                else{
-                    temp.next = max;
-                    max = temp;
-                }
-                if(temp.right != null) queue.add(temp.right);
-                if(temp.left != null) queue.add(temp.left);
-            }        
+            int size= queue.size();
+            Node temp = null;
+            for(int k = 0; k < size; k++)
+            {    
+               Node current = queue.poll();        
+               current.next = temp;
+               temp = current;
+              
+                if(current.right != null) queue.add(current.right);
+                  if(current.left != null) queue.add(current.left);
+            }
         }
         return root;
     }
