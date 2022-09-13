@@ -21,7 +21,7 @@ class Solution {
             return true;
         }
         
-        if(k >= board.length || k < 0 || j >= board[k].length || j< 0 || board[k][j] != word.charAt(pos))
+        if(k >= board.length || k < 0 || j >= board[0].length || j< 0 || board[k][j] != word.charAt(pos))
         {
             return false;
         }
