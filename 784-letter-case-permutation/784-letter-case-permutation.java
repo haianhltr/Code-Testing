@@ -3,32 +3,29 @@ class Solution {
         List<String> list = new ArrayList();
         recur(s.toCharArray(), 0, list);
         return list;
-        
     }
-    
-    public void recur(char [] str, int pos, List<String> result)
+    public void recur(char [] word, int pos, List<String> list)
     {
-        if(pos == str.length)
+        if(pos == word.length)
         {
-            result.add(new String(str));
+            list.add(new String(word));
             return;
         }
-        
-        if(Character.isLetter(str[pos]))
+        if(Character.isLetter(word[pos]))
         {
-            if(Character.isUpperCase(str[pos]))
+            if(Character.isUpperCase(word[pos]))
             {
-                str[pos] = Character.toLowerCase(str[pos]);
-                recur(str, pos+1, result);
-                str[pos] = Character.toUpperCase(str[pos]);
+                word[pos] = Character.toLowerCase(word[pos]);
+                recur(word, pos+1, list);
+                word[pos] = Character.toUpperCase(word[pos]);
             }
-        
-        else
-        {
-            str[pos] = Character.toUpperCase(str[pos]);
-            recur(str, pos+1, result);
-            str[pos] = Character.toLowerCase(str[pos]);
+            else
+            {
+                word[pos] = Character.toUpperCase(word[pos]);
+                recur(word, pos+1, list);
+                word[pos] = Character.toLowerCase(word[pos]);
+            }
         }
+        recur(word, pos+1, list);
     }
-        recur(str, pos+1, result);
-}}
+}
