@@ -1,19 +1,26 @@
 class Solution {
     public List<List<Integer>> subsets(int[] nums) {
-        Arrays.sort(nums);
-        List<List<Integer>> res = new ArrayList<>();
-        helper(res,new ArrayList<>(),nums,0,false);
-        return res;
+        List<List<Integer>> list = new ArrayList();
+        backtrack(list, new ArrayList<Integer>(), 0, nums);
+        return list;
     }
-    
-    public void helper(List<List<Integer>> res, List<Integer> ls, int[] nums, int pos, boolean choosePre) {
-        if(pos==nums.length) {
-            res.add(new ArrayList<>(ls));
-            return;
+    public void backtrack(List<List<Integer>> list, List<Integer> temp, int pos, int [] nums)
+    {
+       list.add(new ArrayList<>(temp));
+        for(int k = pos; k < nums.length; k++)
+        {
+            temp.add(nums[k]);
+            backtrack(list, temp, k+1, nums);
+            temp.remove(temp.size()-1);
+            
         }
-        helper(res,ls,nums,pos+1,false);
-        ls.add(nums[pos]);
-        helper(res,ls,nums,pos+1,true);
-        ls.remove(ls.size()-1);
+        
     }
+        
 }
+
+
+
+
+
+ 
