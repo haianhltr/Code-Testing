@@ -6,14 +6,17 @@ class Solution {
     }
     public void backtrack(List<List<Integer>> list, List<Integer> temp, int pos, int [] nums)
     {
-       list.add(new ArrayList<>(temp));
-        for(int k = pos; k < nums.length; k++)
+        if(pos == nums.length)
         {
-            temp.add(nums[k]);
-            backtrack(list, temp, k+1, nums);
-            temp.remove(temp.size()-1);
-            
+          list.add(new ArrayList<>(temp));
+            return ;
         }
+        
+        temp.add(nums[pos]);
+        backtrack(list, temp, pos+1, nums);
+        temp.remove(temp.size()-1);
+        backtrack(list, temp, pos+1, nums);
+        
         
     }
         
