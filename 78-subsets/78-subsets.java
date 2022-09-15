@@ -15,6 +15,6 @@ class Solution {
         temp.add(nums[pos]);
         backtrack(nums,pos+1, list, temp);
         temp.remove(temp.size()-1);
-        backtrack(nums,pos+1, list,temp);
+          backtrack(nums,pos+1, list, temp);
     }
 }
