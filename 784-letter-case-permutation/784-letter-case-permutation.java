@@ -1,31 +1,37 @@
 class Solution {
     public List<String> letterCasePermutation(String s) {
         List<String> list = new ArrayList();
-        recur(s.toCharArray(), 0, list);
+        backtrack(list, 0, s.toCharArray());
         return list;
     }
-    public void recur(char [] word, int pos, List<String> list)
+    
+    
+    public void backtrack(List<String> list, int pos, char [] letter)
     {
-        if(pos == word.length)
+        if(pos == letter.length)
         {
-            list.add(new String(word));
+            list.add(new String(letter));
             return;
         }
-        if(Character.isLetter(word[pos]))
+        
+        if(Character.isLetter(letter[pos]))
         {
-            if(Character.isUpperCase(word[pos]))
+            if(Character.isLowerCase(letter[pos]))
             {
-                word[pos] = Character.toLowerCase(word[pos]);
-                recur(word, pos+1, list);
-                word[pos] = Character.toUpperCase(word[pos]);
+                letter[pos] = Character.toUpperCase(letter[pos]);
+                backtrack(list, pos+1, letter);
+                letter[pos] = Character.toLowerCase(letter[pos]);
             }
             else
             {
-                word[pos] = Character.toUpperCase(word[pos]);
-                recur(word, pos+1, list);
-                word[pos] = Character.toLowerCase(word[pos]);
+                letter[pos] = Character.toLowerCase(letter[pos]);
+                backtrack(list, pos+1, letter);
+                letter[pos] = Character.toUpperCase(letter[pos]);
             }
+               
         }
-        recur(word, pos+1, list);
+        backtrack(list, pos+1, letter);
     }
 }
+
+
