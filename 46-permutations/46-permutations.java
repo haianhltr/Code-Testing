@@ -10,19 +10,16 @@ class Solution {
         if(temp.size() == nums.length)
         {
             list.add(new ArrayList<>(temp));
+            return;
     
         }
-        else{
-            for(int k =0; k < nums.length; k++)
-            {
+        for(int k =0; k < nums.length; k++)
+        {
                 if(temp.contains(nums[k])) continue;
-                temp.add(nums[k]);
-                backtrack(nums, list, temp);
-                temp.remove(temp.size() -1);
-            }
+            temp.add(nums[k]);
+            backtrack(nums,list, temp);
+            temp.remove(temp.size()-1);
         }
-        
-        
+       
     }
-        
 }
