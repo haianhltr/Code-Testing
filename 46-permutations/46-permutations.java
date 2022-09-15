@@ -11,7 +11,7 @@ class Solution {
             list.add(new ArrayList<>(temp));
             return;
         }
-        else{
+     
             for(int k = 0; k < nums.length; k++)
             {
                 if(temp.contains(nums[k])) continue;
@@ -19,7 +19,7 @@ class Solution {
                 backtrack(list, nums, temp);
                 temp.remove(temp.size()-1);
             }
-        }
+        
     }
 }
 
