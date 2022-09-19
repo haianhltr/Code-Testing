@@ -4,15 +4,17 @@ class Solution {
         backtrack(list, new ArrayList<>(), 0, nums);
         return list;
     }
-    
     public void backtrack(List<List<Integer>> list, List<Integer> temp, int pos, int [] nums)
     {
-        list.add(new ArrayList(temp));
-        for(int k = pos; k < nums.length; k++)
-        {
-            temp.add(nums[k]);
-            backtrack(list, temp, k+1, nums);
-            temp.remove(temp.size()-1);
-        }
+      if(pos == nums.length)
+      {
+          list.add(new ArrayList<>(temp));
+          return;
+      }
+    
+        temp.add(nums[pos]);
+        backtrack(list, temp, pos+1, nums);
+        temp.remove(temp.size()-1);
+        backtrack(list, temp, pos+1, nums);
     }
 }
