@@ -1,28 +1,26 @@
 class Solution {
-    public List<String> letterCasePermutation(String S) {
-        if (S == null) {
-            return new LinkedList<>();
-        }
-        
-        List<String> res = new LinkedList<>();
-        helper(S.toCharArray(), res, 0);
-        return res;
+    public List<String> letterCasePermutation(String s) {
+        List<String> list = new ArrayList<>();
+        backtrack(s.toCharArray(), 0, list);
+        return list;
     }
     
-    public void helper(char[] chs, List<String> res, int pos) {
-        if (pos == chs.length) {
-            res.add(new String(chs));
-            return;
+    public void backtrack(char [] word, int pos, List<String> list)
+    {
+        list.add(new String(word));
+        for(int k = pos; k < word.length; k++)
+        {
+            if(Character.isLetter(word[k]))
+            {
+                if(Character.isUpperCase(word[k])){
+                    word[k] = Character.toLowerCase(word[k]);
+                    backtrack(word, k+1, list);
+                    word[k] = Character.toUpperCase(word[k]);
+                }else{
+                word[k] = Character.toUpperCase(word[k]);
+               backtrack(word, k+1, list);
+               word[k] = Character.toLowerCase(word[k]);
+            }}
         }
-        if (chs[pos] >= '0' && chs[pos] <= '9') {
-            helper(chs, res, pos + 1);
-            return;
-        }
-        
-        chs[pos] = Character.toLowerCase(chs[pos]);
-        helper(chs, res, pos + 1);
-        
-        chs[pos] = Character.toUpperCase(chs[pos]);
-        helper(chs, res, pos + 1);
     }
 }
