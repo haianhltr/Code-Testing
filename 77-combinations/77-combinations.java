@@ -1,18 +1,27 @@
-public class Solution {
+class Solution {
     public List<List<Integer>> combine(int n, int k) {
-        List<List<Integer>> result = new ArrayList<List<Integer>>();
-        if (k > n || k < 0) {
-            return result;
-        }
-        if (k == 0) {
-            result.add(new ArrayList<Integer>());
-            return result;
-        }
-        result = combine(n - 1, k - 1);
-        for (List<Integer> list : result) {
-            list.add(n);
-        }
-        result.addAll(combine(n - 1, k));
-        return result;
+        List<List<Integer>> list = new ArrayList();
+        backtrack(list, new ArrayList<>(), n, k , 1);
+        
+        
+        return list;
     }
+    
+    public void backtrack(List<List<Integer>> list, List<Integer> temp, int n, int k, int pos)
+    {
+        if(temp.size() == k)
+        {
+            list.add(new ArrayList(temp));
+            return;
+        }
+        
+        for(int i = pos; i <= n; i++)
+        {
+            temp.add(i);
+            backtrack(list, temp, n, k, i+1);
+            temp.remove(temp.size()-1);
+        }
+        
+    }
+    
 }
