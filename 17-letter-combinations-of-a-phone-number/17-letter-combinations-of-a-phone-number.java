@@ -1,7 +1,7 @@
 class Solution {
     public List<String> letterCombinations(String digits) {
         List<String> list = new ArrayList();
-        if(digits == "" || digits.length() == 0) return list;
+        if(digits.length() == 0) return list;
         String [] key = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"}; 
         backtrack(list, digits, key, new StringBuilder(), 0);
         return list;
