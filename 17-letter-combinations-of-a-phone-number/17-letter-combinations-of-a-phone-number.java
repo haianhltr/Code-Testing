@@ -15,16 +15,17 @@ class Solution {
             return;
         }
         
-       int number =  digits.charAt(pos) - '0';
-       String letter = key[number -2];
+   
         
-        for(int k = 0; k < letter.length(); k++)
+        for(int k = pos; k < digits.length(); k++)
         {
-                temp.append(letter.charAt(k));
-               
-                backtrack(list, digits, key, temp, pos +1);
+            int number =  Character.getNumericValue(digits.charAt(k));
+            String letter = key[number -2];
+                for(int i = 0; i < letter.length(); i++){
+                   
+                temp.append(letter.charAt(i));
+                backtrack(list, digits, key, temp, k +1);
                 temp.deleteCharAt(temp.length()-1);
-            }
-        }
-    }
+            }}}}
+    
 
