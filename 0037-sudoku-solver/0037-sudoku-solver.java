@@ -38,7 +38,7 @@ class Solution {
         {
             if(board[k][column] == c) return false;
             if(board[row][k] == c) return false;
-            if(board[3 * (row/3) + k/3][3 * (column/3) + k%3] != '.' && board[3* (row/3) + k/3][3 * (column/3) + k%3] == c) return false;
+            if(board[3* (row/3) + k/3][3 * (column/3) + k%3] == c) return false;
            
         }
         return true;
