@@ -23,7 +23,7 @@ class Solution {
             {
                 temp.add(String.valueOf(grid[k]));
             }
-            list.add(new ArrayList(temp));
+            list.add(temp);
             return false;
         }
         
