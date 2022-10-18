@@ -1,24 +1,22 @@
 class Solution {
-    int count = 0;
     public int findTargetSumWays(int[] nums, int target) {
-        DFS(nums, target,0, 0);
-        return count;
+      return  DFS(nums, target, 0, 0 , 0);
+        
     }
-    
-    public void DFS(int [] nums, int target, int sum, int index)
+    public int DFS(int [] nums, int target, int sum, int index, int count)
     {
         if(index == nums.length)
         {
             if(sum == target)
             {
-                count++;
+                return 1;
             }
-                            return;
-
+            return 0;
         }
         
-        DFS(nums, target, sum + nums[index], index + 1);
-        DFS(nums,target, sum - nums[index], index + 1);
+       int a =  DFS(nums, target, sum + nums[index], index + 1, count);
+       int b = DFS(nums, target, sum - nums[index], index + 1 , count);
+        
+        return a + b;
     }
-    
 }
