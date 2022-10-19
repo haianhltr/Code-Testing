@@ -17,29 +17,31 @@ class Node {
     }
 }
 */
-
 class Solution {
+    HashMap<Node,Node> hash = new HashMap();
     public Node cloneGraph(Node node) {
-        if(node == null) return null;
-        Queue<Node> queue = new LinkedList();
-        queue.add(node);
-        HashMap<Node, Node> hash = new HashMap();
-        hash.put(node, new Node(node.val));
-        while(!queue.isEmpty())
-        {
-            Node current  = queue.poll();
-            
-            for(Node nei : current.neighbors)
-            {
-                if(!hash.containsKey(nei))
-                {
-                    hash.put(nei, new Node(nei.val));
-                    queue.add(nei);
-                }
-                hash.get(current).neighbors.add(hash.get(nei));
-                
-            }
-        }
+        if(node ==null) return null;
+        DFS(node);
         return hash.get(node);
+    }
+    public void DFS(Node node)
+    {
+        if(!hash.containsKey(node))
+        {hash.put(node, new Node(node.val));}
+        else{
+            return;}
+        
+        for(Node nei : node.neighbors)
+        {
+            if(!hash.containsKey(nei))
+            {
+                    DFS(nei); 
+            }
+           
+
+            hash.get(node).neighbors.add(hash.get(nei));
+        }
+        
+            
     }
 }
