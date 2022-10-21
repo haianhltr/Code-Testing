@@ -33,10 +33,7 @@ class Solution {
         
         for(Node nei : node.neighbors)
         {
-            if(!hash.containsKey(nei))
-            {
-                    DFS(nei); 
-            }
+          DFS(nei);
            
             hash.get(node).neighbors.add(hash.get(nei));
         }
