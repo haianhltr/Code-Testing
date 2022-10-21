@@ -1,21 +1,26 @@
 class Solution {
     public List<List<Integer>> pacificAtlantic(int[][] heights) {
-        List<List<Integer>> list = new ArrayList();
-        boolean [][] atlantic = new boolean[heights.length][heights[0].length];
+        List<List<Integer>> list  = new ArrayList();
         boolean [][] pacific = new boolean[heights.length][heights[0].length];
-        Queue<int []> queue = new LinkedList();
-        //fill pacific
-        fill(queue, heights, 0, 0);
-        DFS(queue, heights, pacific);
-        //fill atlantic
-        fill(queue, heights, heights.length-1, heights[0].length-1);
-        DFS(queue, heights, atlantic);
+        boolean [][] atlantic = new boolean[heights.length][heights[0].length];
+        //fill pacific boolean array
+        for(int k = 0; k < heights.length; k++)
+        {
+            //fill horizontal
+            DFS(pacific, heights, k ,0, heights[k][0]);
+            DFS(atlantic, heights, k, heights[0].length-1, heights[k][heights[0].length-1]);
+        }
+        for(int j = 0; j < heights[0].length; j++)
+        {
+            DFS(pacific, heights, 0, j, heights[0][j]);
+            DFS(atlantic, heights, heights.length-1, j , heights[heights.length-1][j]);
+        }
         
         for(int k = 0; k < heights.length; k++)
         {
-            for(int j = 0; j < heights[0].length; j++)
+            for(int j = 0; j < heights[0].length;j++)
             {
-                if(atlantic[k][j] == true && pacific[k][j] == true)
+                if(pacific[k][j] == true && atlantic[k][j] == true)
                 {
                     list.add(Arrays.asList(new Integer [] {k,j}));
                 }
@@ -23,54 +28,21 @@ class Solution {
         }
         return list;
         
+    }
+    
+  
+    
+    public void DFS(boolean [][] ocean, int [][] heights, int row, int column, int prevValue)
+    {
+        if(row >= heights.length || row < 0 || column >= heights[0].length || column < 0 || prevValue > heights[row][column] || ocean[row][column] == true)
+        {
+            return;
+        }
+        ocean[row][column] = true;
         
+        DFS(ocean, heights, row+1, column, heights[row][column]);
+        DFS(ocean, heights, row-1, column, heights[row][column]);
+        DFS(ocean, heights, row, column + 1, heights[row][column]);
+        DFS(ocean, heights, row, column - 1, heights[row][column]);
     }
-    
-    public void fill(Queue<int []> queue, int [][] heights, int startRow, int startColumn)
-    {
-        for(int k = 0; k < heights.length; k++)
-        {
-                  queue.add(new int [] {k, startColumn});
-         
-           
-        }
-        for(int k = 0; k < heights[0].length; k ++)
-        {
-          queue.add(new int [] {startRow, k});
-        }
-    }
-    
-    public void DFS(Queue<int []> queue, int [][] heights, boolean [][] ocean)
-    {
-        while(!queue.isEmpty())
-        {
-            int [] temp =  queue.poll();
-            int a = temp[0];
-            int b = temp[1];
-            if(ocean[a][b] == true)
-            {
-                continue;
-            }
-            ocean[a][b] = true;
-            
-            if(a+1 < heights.length && heights[a+1][b] >= heights[a][b])
-            {
-                queue.add(new int [] {a+1,b});
-            }
-            if(a-1 >= 0 &&  heights[a-1][b] >= heights[a][b])
-            {
-                queue.add(new int [] {a-1,b});
-            }
-            if(b+1 < heights[0].length && heights[a][b+1] >= heights[a][b])
-            {
-                queue.add(new int [] {a,b+1});
-            }
-            if(b-1 >= 0 && heights[a][b-1] >= heights[a][b])
-            {
-                queue.add(new int [] {a,b-1});
-            }
-        }
-    }
-    
-    
 }
