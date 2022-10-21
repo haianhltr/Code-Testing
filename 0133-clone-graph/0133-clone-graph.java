@@ -38,7 +38,6 @@ class Solution {
                     DFS(nei); 
             }
            
-
             hash.get(node).neighbors.add(hash.get(nei));
         }
         
