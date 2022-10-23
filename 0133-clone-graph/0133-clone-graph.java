@@ -17,27 +17,30 @@ class Node {
     }
 }
 */
+
 class Solution {
-    HashMap<Node,Node> hash = new HashMap();
+     HashMap<Node, Node> hash = new HashMap();
     public Node cloneGraph(Node node) {
-        if(node ==null) return null;
-        DFS(node);
-        return hash.get(node);
+       if(node ==null) return null;
+       DFS(node);
+       return hash.get(node);
     }
+    
     public void DFS(Node node)
     {
-        if(!hash.containsKey(node))
-        {hash.put(node, new Node(node.val));}
-        else{
-            return;}
+        if(hash.containsKey(node))
+        {
+            return;
+        }
+        else
+        {
+            hash.put(node, new Node(node.val));
+        }
         
         for(Node nei : node.neighbors)
         {
-          DFS(nei);
-           
+            DFS(nei);
             hash.get(node).neighbors.add(hash.get(nei));
         }
-        
-            
     }
 }
