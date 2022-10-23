@@ -19,28 +19,23 @@ class Node {
 */
 
 class Solution {
-     HashMap<Node, Node> hash = new HashMap();
+    HashMap<Node, Node> hash = new HashMap();
     public Node cloneGraph(Node node) {
-       if(node ==null) return null;
-       DFS(node);
-       return hash.get(node);
-    }
-    
-    public void DFS(Node node)
-    {
-        if(hash.containsKey(node))
+        if(node ==null) return null;
+        if(!hash.containsKey(node))
         {
-            return;
+            hash.put(node, new Node(node.val));
         }
         else
         {
-            hash.put(node, new Node(node.val));
+            return hash.get(node);
         }
         
         for(Node nei : node.neighbors)
         {
-            DFS(nei);
-            hash.get(node).neighbors.add(hash.get(nei));
+            hash.get(node).neighbors.add(cloneGraph(nei));
         }
+            
+        return hash.get(node);
     }
 }
