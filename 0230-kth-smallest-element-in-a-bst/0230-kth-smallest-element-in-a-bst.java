@@ -14,21 +14,18 @@
  * }
  */
 class Solution {
-   public static int ans = 0;
-public int kthSmallest(TreeNode root, int k) {
-    helper(root, k);
-    return ans;
-}
-
-public int helper(TreeNode root, int k) {
-    if (root == null) {
-        return 0;
+    public int kthSmallest(TreeNode root, int k) {
+        List<Integer> list = new ArrayList();
+        DFS(list, root);
+        return list.get(k-1);
     }
-    int leftCount = helper(root.left, k);
-    int rightCount = helper(root.right, k - leftCount - 1);
-    if (k == leftCount + 1) {
-        ans = root.val;
+    
+    public void DFS(List<Integer> list, TreeNode root)
+    {
+        if(root == null) return;
+        DFS(list, root.left);
+        list.add(root.val);
+        DFS(list,root.right);
+        
     }
-    return leftCount + rightCount + 1;
-}
 }
