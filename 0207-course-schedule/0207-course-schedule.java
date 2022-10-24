@@ -8,10 +8,16 @@ public class Solution {
         for(int i=0;i<numCourses;i++)
             graph[i] = new ArrayList();
             
-        for(int i=0; i<prerequisites.length;i++){
-            degree[prerequisites[i][1]]++;
-            graph[prerequisites[i][0]].add(prerequisites[i][1]);
+       for(int [] temp : prerequisites)
+        {
+            int classCount = temp[0];
+            int classNeighbor = temp[1];
+             degree[classCount]++;
+            graph[classNeighbor].add(classCount);
         }
+        
+        
+        
         for(int i=0; i<degree.length;i++){
             if(degree[i] == 0){
                 queue.add(i);
