@@ -1,38 +1,50 @@
-public class Solution {
-    public boolean canFinish(int numCourses, int[][] prerequisites) {
-        ArrayList[] graph = new ArrayList[numCourses];
-        int[] degree = new int[numCourses];
-        Queue queue = new LinkedList();
-        int count=0;
-        
-        for(int i=0;i<numCourses;i++)
-            graph[i] = new ArrayList();
-            
-        for(int i=0; i<prerequisites.length;i++){
-            degree[prerequisites[i][1]]++;
-            graph[prerequisites[i][0]].add(prerequisites[i][1]);
+class Solution {
+    public boolean canFinish(int n, int[][] prerequisites) {
+        int num = 0;
+        ArrayList<Integer> [] prereqs = new ArrayList[n];
+        if(prerequisites == null) return false;
+        int [] count = new int [n];
+        for(int k = 0; k < n; k++)
+        {
+            prereqs[k] = new ArrayList<Integer>();
         }
-        for(int i=0; i<degree.length;i++){
-            if(degree[i] == 0){
-                queue.add(i);
-                count++;
+        
+        for(int [] temp : prerequisites)
+        {
+            int classCount = temp[0];
+            int classNeighbor = temp[1];
+            count[classCount]++;
+            prereqs[classNeighbor].add(classCount);
+        }
+        
+        Queue<Integer> queue = new LinkedList();
+        
+        for(int k = 0; k < n; k++)
+        {
+            if(count[k] == 0)
+            {
+               queue.add(k); 
+               num++;
             }
         }
         
-        while(queue.size() != 0){
-            int course = (int)queue.poll();
-            for(int i=0; i<graph[course].size();i++){
-                int pointer = (int)graph[course].get(i);
-                degree[pointer]--;
-                if(degree[pointer] == 0){
-                    queue.add(pointer);
-                    count++;
+        while(!queue.isEmpty())
+        {
+            int temp = queue.poll();
+            // got 1
+            for(int nei : prereqs[temp])
+            {
+                count[nei]--;
+                if(count[nei] == 0)
+                {
+                    queue.add(nei);
+                    num++;
                 }
             }
         }
-        if(count == numCourses)
-            return true;
-        else    
-            return false;
+        
+        
+    return num == n ? true : false;
+        
     }
 }
