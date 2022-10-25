@@ -22,7 +22,7 @@ class Solution {
             if(count[k] == 0)
             {
                 queue.add(k);
-                n--;
+               n--;
             }
         }
         
