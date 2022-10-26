@@ -5,7 +5,7 @@ class Solution {
         int [] count = new int [n];
         for(int k =0; k < n; k++)
         {
-            prereqs[k] = new ArrayList<Integer>();
+            prereqs[k] = new ArrayList();
         }
         
         for(int [] temp : prerequisites)
