@@ -15,27 +15,22 @@
  */
 class Solution {
     public List<Integer> rightSideView(TreeNode root) {
-       
         List<Integer> list = new ArrayList();
-         if(root ==null) return list;
-        Queue<TreeNode> queue = new LinkedList();
-        queue.add(root);
-        while(!queue.isEmpty())
+        DFS(root, list, 0);
+        return list;
+    }
+    
+    public void DFS(TreeNode root, List<Integer> list, int currentDepth)
+    {
+        if(root == null)
+            return;
+        if(currentDepth == list.size())
         {
-            int size = queue.size();
-            for(int k = 0; k < size; k++)
-            {
-                TreeNode temp = queue.poll();
-                if(k == size-1)
-                {
-                    list.add(temp.val);
-                    
-                }
-                if(temp.left != null) queue.add(temp.left);
-                if(temp.right != null) queue.add(temp.right);
-            }
+            list.add(root.val);
         }
         
-        return list;
+        
+        DFS(root.right, list, currentDepth + 1);
+        DFS(root.left, list, currentDepth + 1);
     }
 }
