@@ -13,6 +13,11 @@ class Solution {
         HashMap<TreeNode, ArrayList<TreeNode>> hash = new HashMap();
         Queue<TreeNode> queue = new LinkedList();
         Set<TreeNode> set = new HashSet();
+        if(k == 0)
+        {
+            list.add(target.val);
+            return list;
+        }
         fill(hash, queue, root);
         find(hash, list, set ,queue, target, k);
         return list;
