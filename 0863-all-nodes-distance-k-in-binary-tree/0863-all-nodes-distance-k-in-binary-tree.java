@@ -12,9 +12,13 @@ class Solution {
         List<Integer> list = new ArrayList();
         HashMap<TreeNode, Integer> hash = new HashMap();
         fill(hash,target,root);
-        if(hash.containsKey(target))
+        if(k == 0)
         {
-            DFS(list,hash, root,k, 0);
+            list.add(target.val);
+        }
+        else
+        {
+            DFS(list, hash, root, k, 0);
         }
         
         return list;
