@@ -12,7 +12,11 @@ class Solution {
         List<Integer> list = new ArrayList();
         HashMap<TreeNode, Integer> hash = new HashMap();
         fill(hash,target,root);
-        DFS(list,hash, root,k, 0);
+        if(hash.containsKey(target))
+        {
+            DFS(list,hash, root,k, 0);
+        }
+        
         return list;
     }
     
