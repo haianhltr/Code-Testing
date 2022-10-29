@@ -10,66 +10,69 @@
 class Solution {
     public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
         List<Integer> list = new ArrayList();
-        if(k == 0)
+        HashMap<TreeNode, ArrayList<TreeNode>> hash = new HashMap();
+        Queue<TreeNode> queue = new LinkedList();
+        Set<TreeNode> set = new HashSet();
+        fill(hash, queue, root);
+        find(hash, list, set ,queue, target, k);
+        return list;
+            
+    }
+    
+    public void find(HashMap<TreeNode, ArrayList<TreeNode>> hash, List<Integer> list, Set<TreeNode> set, Queue<TreeNode> queue, TreeNode target, int k)
+    {
+        queue.add(target);
+        while(k > 0)
         {
-            list.add(target.val);
+            int size = queue.size();
+            k--;
+            for(int i  = 0; i < size; i++)
+            {
+                TreeNode temp = queue.poll();
+                set.add(temp);
+                for(TreeNode nei : hash.get(temp))
+                {
+                    if(!set.contains(nei))
+                    queue.add(nei);
+                }
+            }
+        }
+        
+        while(!queue.isEmpty())
+        {
+            list.add(queue.poll().val);
+        }
+
+    }
+    
+    
+    
+    public void fill(HashMap<TreeNode, ArrayList<TreeNode>> hash, Queue<TreeNode> queue, TreeNode root)
+    {
+        queue.add(root);
+        while(!queue.isEmpty())
+        {
+            int size = queue.size();
+            for(int k = 0; k < size; k++)
+            {
+                TreeNode temp =queue.poll();
+                if(!hash.containsKey(temp)) hash.put(temp, new ArrayList());
+                if(temp.left != null)
+                {
+                    hash.get(temp).add(temp.left);
+                    hash.put(temp.left, new ArrayList());
+                    hash.get(temp.left).add(temp);
+                    queue.add(temp.left);
+                }
+                  if(temp.right != null)
+                {
+                    hash.get(temp).add(temp.right);
+                    hash.put(temp.right, new ArrayList());
+                    hash.get(temp.right).add(temp);
+                    queue.add(temp.right);
+                }
+            }
             
         }
-        else{
-            DFS(list, root, target, k,0);
-        }
-        
-        return list;
-    }
-    public int DFS(List<Integer> list, TreeNode root, TreeNode target, int k, int depth)
-    {
-        //base case
-        if(root == null) return 0;
-        if(depth == k)
-        {
-            list.add(root.val);
-            return 0;
-        }
-    
-        int left,right;    
-        //go left
-        if(root.val == target.val || depth > 0)
-        {
-            left = DFS(list, root.left, target, k, depth + 1);
-            right = DFS(list, root.right, target, k, depth + 1);
-        }
-        else
-        {
-            left = DFS(list, root.left, target, k, depth);
-            right = DFS(list, root.right, target, k, depth);
-        }
-        
-        
-        if(root.val == target.val)
-        {
-            return 1;
-        }
-        
-        if(left == k || right == k)
-        {
-            list.add(root.val);
-            return 0;
-        }
-        //back to og
-        if(left > 0)
-        {
-            DFS(list, root.right, target, k, left + 1);
-            return left + 1;
-        }
-        if(right > 0)
-        {
-            DFS(list, root.left, target, k, right + 1);
-            return right + 1;
-        }
-        
-     
-        
-        //return statement
-        return 0;
     }
 }
