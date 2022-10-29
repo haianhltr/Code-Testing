@@ -8,55 +8,51 @@
  * }
  */
 class Solution {
-    public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
-        List<Integer> list = new ArrayList();
-        HashMap<TreeNode, Integer> hash = new HashMap();
-        fill(hash,target,root);
-        if(k == 0)
-        {
-            list.add(target.val);
+            
+    public List<Integer> distanceK(TreeNode root, TreeNode target, int K) {
+        List<Integer> res = new LinkedList<>();
+        if (K == 0) {
+            res.add(target.val);
+        } else {
+            dfs(res, root, target.val, K ,0);
         }
-        else
-        {
-            DFS(list, hash, root, k, 0);
-        }
+        return res;
+    }
+    
+    private int dfs(List<Integer> res, TreeNode node, int target, int K, int depth) {
+        if (node == null) return 0;
         
-        return list;
-    }
-    
-    public void DFS(List<Integer> list, HashMap<TreeNode, Integer> hash, TreeNode root, int k, int length)
-    {
-        if(root == null) return;
-        if(hash.containsKey(root)) 
-        {
-            length = hash.get(root);
-        }
-        if(length == k) list.add(root.val);
-        DFS(list, hash, root.left, k, length+1);
-        DFS(list, hash, root.right, k, length+1);
-    }
-    
-    public int fill(HashMap<TreeNode, Integer> hash, TreeNode target, TreeNode root)
-    {
-        if(root == null) return -1;
-        if(root.val == target.val)
-        {
-            hash.put(root, 0);
+        if (depth == K) {
+            res.add(node.val);
             return 0;
         }
-        int left = fill(hash, target, root.left);
-        if(left >= 0)
-        {
-            hash.put(root, left + 1);
-            return(left +1);
-        }
-        int right = fill(hash,target, root.right);
-        if(right >= 0)
-        {
-            hash.put(root, right  +1);
-            return(right +1);
+        
+        int left, right;
+        if (node.val == target || depth > 0) {
+            left = dfs(res, node.left, target, K, depth + 1);
+            right = dfs(res, node.right, target, K, depth + 1);
+        } else {
+            left = dfs(res, node.left, target, K, depth);
+            right = dfs(res, node.right, target, K, depth);
         }
         
-        return -1;
+        if (node.val == target) return 1;
+        
+        if (left == K || right == K) {
+            res.add(node.val);
+            return 0;
+        }
+        
+        if (left > 0) {
+            dfs(res, node.right, target, K, left + 1);
+            return left + 1;
+        }
+        
+        if (right > 0) {
+            dfs(res, node.left, target, K, right + 1);
+            return right + 1;
+        }
+        
+        return 0;
     }
 }
