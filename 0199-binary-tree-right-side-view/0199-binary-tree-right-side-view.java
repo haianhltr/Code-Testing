@@ -16,21 +16,14 @@
 class Solution {
     public List<Integer> rightSideView(TreeNode root) {
         List<Integer> list = new ArrayList();
-        DFS(root, list, 0);
+        DFS(root, list , 0);
         return list;
     }
-    
-    public void DFS(TreeNode root, List<Integer> list, int currentDepth)
+    public void DFS(TreeNode root, List<Integer> list, int depth)
     {
-        if(root == null)
-            return;
-        if(currentDepth == list.size())
-        {
-            list.add(root.val);
-        }
-        
-        
-        DFS(root.right, list, currentDepth + 1);
-        DFS(root.left, list, currentDepth + 1);
+        if(root == null) return;
+        if(list.size() == depth) list.add(root.val);
+        DFS(root.right, list, depth + 1);
+        DFS(root.left, list, depth + 1);
     }
 }
