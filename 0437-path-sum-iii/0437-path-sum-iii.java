@@ -14,28 +14,21 @@
  * }
  */
 class Solution {
-      public int pathSum(TreeNode root, int targetSum) {
-        if (root == null)
-            return 0;
-        
-        return getSum(root, targetSum, 0) + pathSum(root.left, targetSum) + pathSum(root.right, targetSum);
+    int count = 0;
+    public int pathSum(TreeNode root, int targetSum) {
+        if(root == null) return 0;
+        DFS(root, targetSum, 0);
+        pathSum(root.left, targetSum);
+        pathSum(root.right, targetSum);
+        return count;
     }
     
-    public int getSum(TreeNode root, int targetSum, long sum) {
-        int res = 0;
-        if (root == null)
-            return res;
-        
+    public void DFS(TreeNode root, int targetSum, long sum)
+    {
+        if(root == null) return;
         sum += root.val;
-        
-        if (sum == targetSum)
-            res++;
-        
-        res += getSum(root.left, targetSum, sum);
-        res += getSum(root.right, targetSum, sum);
-        
-  
-        
-        return res;
+        if(sum == targetSum) count++;
+        DFS(root.left, targetSum, sum);
+        DFS(root.right, targetSum, sum);
     }
 }
