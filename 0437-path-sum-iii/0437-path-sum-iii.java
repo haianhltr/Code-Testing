@@ -25,8 +25,8 @@ class Solution {
     
     public void DFS(TreeNode root, int targetSum, long sum)
     {
-        if(root == null) return;
-        sum += root.val;
+        if(root ==null) return;
+        sum+= root.val;
         if(sum == targetSum) count++;
         DFS(root.left, targetSum, sum);
         DFS(root.right, targetSum, sum);
