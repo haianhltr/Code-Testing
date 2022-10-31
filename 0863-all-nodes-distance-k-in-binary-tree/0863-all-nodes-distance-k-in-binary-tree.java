@@ -24,7 +24,7 @@ class Solution {
         if(depth == k)
         {
             list.add(root.val);
-            return 0;
+            // return 0;
         }
             
         int a, b;
@@ -48,7 +48,7 @@ class Solution {
         if(a == k || b == k)
         {
             list.add(root.val);
-            return 0;
+            // return 0;
         }
         
         if(a > 0)
