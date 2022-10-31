@@ -25,7 +25,6 @@ class Solution {
         if(root == null) return;
         DFS(list, root.left);
         list.add(root.val);
-        DFS(list,root.right);
-        
+        DFS(list, root.right);
     }
 }
