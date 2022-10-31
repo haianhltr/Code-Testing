@@ -10,48 +10,60 @@
 class Solution {
     public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
         List<Integer> list = new ArrayList();
-        HashMap<TreeNode, Integer> hash = new HashMap();
-        fill(root, target, hash);
-        find(root, hash, k, 0, list);
+        if(k == 0) 
+        {
+          list.add(target.val);  
+        }
+        else DFS(root, target, k, 0, list);
         return list;
     }
     
-    public void find(TreeNode root, HashMap<TreeNode, Integer> hash, int k, int current, List<Integer> list)
+    public int DFS(TreeNode root, TreeNode target, int k, int depth, List<Integer> list)
     {
-        if(root == null) return;
-        if(hash.containsKey(root)) current = hash.get(root);
-        if(k == current)
+        if(root == null) return 0;
+        if(depth == k)
         {
             list.add(root.val);
-    
+            return 0;
         }
-        find(root.left, hash, k, current+1, list);
-        find(root.right, hash, k , current+1,list);
-    }
-    
-    public int fill(TreeNode root, TreeNode target, HashMap<TreeNode, Integer> hash)
-    {
-        if(root == null) return -1;
+            
+        int a, b;
+        if(root.val == target.val || depth > 0) 
+        {
+           a = DFS(root.left, target, k , depth+1, list);
+           b= DFS(root.right, target, k, depth + 1, list);
+            
+        }
+        else
+        {
+          a = DFS(root.left, target, k , depth, list);
+          b = DFS(root.right, target, k, depth, list);
+        }
+        
         if(root.val == target.val)
         {
-            hash.put(root, 0);
+            return 1;
+        }
+        
+        if(a == k || b == k)
+        {
+            list.add(root.val);
             return 0;
         }
         
-        int a = fill(root.left, target, hash);
-        int b = fill(root.right, target, hash);
-        
-        if(a >= 0)
+        if(a > 0)
         {
-            hash.put(root, a + 1); 
-            return a+1;
+            DFS(root.right, target, k, a + 1, list);
+            return a + 1;
         }
-        if(b >= 0)
-        {hash.put(root, b + 1);
-            return b+1;}
+        if(b > 0)
+        {
+            DFS(root.left, target, k, b + 1, list);
+            return b + 1;
+        }
         
-        return -1;
+        return 0;
         
-      
+        
     }
 }
