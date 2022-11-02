@@ -16,27 +16,25 @@
 class Solution {
     public TreeNode constructMaximumBinaryTree(int[] nums) {
         return DFS(nums, 0, nums.length-1);
-        
     }
     
-    public TreeNode DFS(int [] nums, int start, int end)
+    public TreeNode DFS(int [] nums, int left, int right)
     {
-        if(start > end) return null;
-
-        int max = start;
-        for(int k = start + 1; k <= end; k++)
+  
+        if(left > right) return null;
+        int maxIndex = left;
+        for(int k = left+1; k <= right; k++)
         {
-            if(nums[k] > nums[max])
+            if(nums[k] > nums[maxIndex])
             {
-                max = k;
-              
+                maxIndex = k;
             }
         }
         
+        TreeNode result = new TreeNode(nums[maxIndex]);
+        result.left = DFS(nums, left, maxIndex-1);
+        result.right = DFS(nums, maxIndex + 1, right);
         
-        TreeNode temp = new TreeNode(nums[max]);
-        temp.left = DFS(nums, start, max-1);
-        temp.right = DFS(nums, max+1, end);
-        return temp;
+        return result;
     }
 }
