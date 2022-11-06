@@ -26,7 +26,7 @@ class Solution {
         if(length == k) 
         {
             list.add(root.val);
-            return 0;
+     
         }
         int left, right =0;
         if(root.val == target.val || length > 0)
