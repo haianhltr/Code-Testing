@@ -23,7 +23,7 @@ class Solution {
     {
         if(left > right) return null;
         int maxIndex = left;        
-        for(int k = left; k <= right; k++)
+        for(int k = left + 1; k <= right; k++)
         {
             if(inorder[k] == preorder[pos])
             {
