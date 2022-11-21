@@ -1,11 +1,13 @@
+
 class Solution {
     Set<Integer> set = new HashSet();
     public boolean canFinish(int n, int[][] prerequisites) {
-        ArrayList<Integer> [] prereqs = new ArrayList[n];
+        ArrayList<Integer>[] prereqs = new ArrayList[n];
         int [] count = new int [n];
-        for(int k = 0; k < n; k++)
+        for(int k= 0; k < n; k++)
         {
             prereqs[k] = new ArrayList();
+            
         }
         
         for(int [] temp : prerequisites)
@@ -20,33 +22,31 @@ class Solution {
             {
                 if(!set.contains(k))
                 {
-                   n =  DFS(prereqs, count, n, k);
+                   n = DFS(prereqs, count, k, n);
                 }
             }
         }
-        
-        return n == 0 ? true :false;
+        return n == 0 ? true : false;
     }
     
-    public int DFS(ArrayList<Integer> [] prereqs, int [] count, int n, int num)
+    public int DFS(ArrayList<Integer> [] prereqs, int [] count, int num, int n)
     {
-        n--;
         set.add(num);
+        n--;
         if(prereqs[num].size() == 0)
         {
             return n;
         }
-        
-        for(int a : prereqs[num])
+        for(int nei : prereqs[num])
         {
-            count[a]--;
-            if(count[a] == 0)
+            count[nei]--;
+            if(count[nei] == 0)
             {
-                n = DFS(prereqs, count, n, a);
+               n = DFS(prereqs, count, nei, n);
             }
         }
-        
         return n;
-        
     }
+    
+    
 }
