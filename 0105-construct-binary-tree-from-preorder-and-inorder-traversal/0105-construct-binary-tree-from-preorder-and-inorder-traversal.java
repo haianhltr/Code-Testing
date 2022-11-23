@@ -14,28 +14,28 @@
  * }
  */
 class Solution {
-    int pos = 0;
+    int count = 0;
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        return DFS(preorder, inorder, 0, inorder.length-1);
+        return DFS(preorder, inorder, 0, preorder.length-1);
+        
     }
     
-    public TreeNode DFS(int [] preorder, int [] inorder, int left, int right)
+    public TreeNode DFS(int [] pre, int [] in, int left , int right)
     {
         if(left > right) return null;
-        int maxIndex = left;        
-        for(int k = left + 1; k <= right; k++)
+        int mid = left;
+        for(int k =left; k <= right; k++)
         {
-            if(inorder[k] == preorder[pos])
+            if(in[k] == pre[count])
             {
-                maxIndex = k;
+                mid = k;
             }
         }
-        
-        
-        TreeNode temp = new TreeNode(preorder[pos]);
-        pos ++;
-        temp.left = DFS(preorder, inorder, left, maxIndex -1);
-        temp.right = DFS(preorder, inorder, maxIndex + 1, right);
+        TreeNode temp = new TreeNode(pre[count]);
+        count++;
+        temp.left = DFS(pre, in, left, mid - 1);
+        temp.right = DFS(pre, in, mid + 1, right);
         return temp;
     }
 }
+
