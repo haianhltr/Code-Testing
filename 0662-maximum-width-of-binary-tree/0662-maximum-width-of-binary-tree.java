@@ -14,18 +14,17 @@
  * }
  */
 class Solution {
-  
     public int widthOfBinaryTree(TreeNode root) {
+        return DFS(root, new ArrayList<Integer>(), new ArrayList<Integer>(), 0 , 1);
         
-        
-      
-          return DFS(root, 1, 0, new ArrayList(), new ArrayList());
-      
     }
     
-    public int DFS(TreeNode root, int width, int level, ArrayList<Integer> start, ArrayList<Integer> end)
+    public int DFS(TreeNode root, List<Integer> start, List<Integer> end, int level , int width)
     {
         if(root == null) return 0;
+        
+        //go to each level, if revert back and has something on the right, replace that number with the width
+        
         if(level == start.size())
         {
             start.add(width);
@@ -35,18 +34,12 @@ class Solution {
         {
             end.set(level, width);
         }
-    
-    int cur = end.get(level) - start.get(level) + 1;
-    
-    
-    int left =  DFS(root.left, 2 * width, level + 1, start, end);
-    int right = DFS(root.right, 2 * width + 1, level + 1, start, end);
-    
-    return Math.max(cur, Math.max(left, right));
+        
+        int cur = end.get(level) - start.get(level) + 1;
+        
+        int left = DFS(root.left, start, end, level + 1, 2 * width);
+        int right = DFS(root.right, start, end, level + 1, 2 * width + 1);
+        
+        return Math.max(cur, Math.max(left, right));
     }
 }
-
-// start [1,2,4]
-// end   [1,2,5]
-// return 5 -4 + 1 = 2
-
