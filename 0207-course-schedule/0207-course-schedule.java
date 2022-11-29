@@ -39,7 +39,7 @@ class Solution {
             count[nei]--;
             if(count[nei] == 0) 
             {
-                if(!visited[nei])
+              
                 n = DFS(n, prereqs, count, visited, nei);
             }
         }
