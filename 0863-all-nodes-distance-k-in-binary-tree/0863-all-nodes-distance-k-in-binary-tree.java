@@ -9,37 +9,35 @@
  */
 class Solution {
     public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
-        List<Integer> list = new ArrayList();
         HashMap<TreeNode, Integer> hash = new HashMap();
+        List<Integer> list = new ArrayList();
         DFS(root, target, hash);
-        find(list,k, root, target, hash, 0);
+        check(root, list, hash, 0, k);
         return list;
-        
     }
-    public void find(List<Integer> list, int k, TreeNode root, TreeNode target, HashMap<TreeNode, Integer> hash, int num)
+    public void check(TreeNode root, List<Integer> list, HashMap<TreeNode, Integer> hash, int pos, int k)
     {
         if(root == null) return;
-        if(hash.containsKey(root)) num = hash.get(root);
-        if(num == k) 
+    
+        if(hash.containsKey(root)) pos = hash.get(root);
+            if(pos == k)
         {
-           list.add(root.val);
-            
+            list.add(root.val);
+           
         }
-        
-        find(list, k , root.left, target, hash, num + 1);
-        find(list, k , root.right, target, hash, num + 1);
-        
-    }
+        check(root.left, list, hash, pos + 1, k);
+        check(root.right, list, hash, pos +1, k);
+     }
     
-    
-    public int DFS(TreeNode root, TreeNode target,HashMap<TreeNode, Integer> hash)
+    public int DFS(TreeNode root, TreeNode target, HashMap<TreeNode, Integer> hash)
     {
         if(root == null) return -1;
-        if(root.val == target.val) 
+        if(root.val == target.val)
         {
-            hash.put(root,0);
+            hash.put(root, 0);
             return 0;
         }
+        
         int a = DFS(root.left, target, hash);
         if(a >= 0)
         {
