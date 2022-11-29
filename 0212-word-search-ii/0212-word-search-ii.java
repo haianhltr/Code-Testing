@@ -15,9 +15,8 @@ class Solution {
     
     public void DFS(char [][] board, int r, int c, TrieNode p, List<String> list)
     {
-        if(r < 0 || r >= board.length || c < 0 || c >= board[0].length) return;
+        if(r < 0 || r >= board.length || c < 0 || c >= board[0].length || board[r][c] == '#' || p.next[board[r][c]-'a'] == null) return;
         char letter = board[r][c];
-        if(letter == '#' || p.next[letter - 'a'] == null) return;
         p = p.next[letter-'a'];
         if(p.word != null)
         {
