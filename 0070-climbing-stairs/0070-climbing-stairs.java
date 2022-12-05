@@ -1,25 +1,16 @@
 class Solution {
-    int [] fib = new int[10000];
     public int climbStairs(int n) {
-      fib[0] = 1;
-      fib[1] = 1;
-      fib[2] = 2;
-      return DFS(n);
-        
+        Map<Integer, Integer> memo = new HashMap<>();
+        memo.put(1, 1);
+        memo.put(2, 2);
+        return climbStairs(n, memo);
     }
-    public int DFS(int n)
-    {
-        if(n == 0) return 1;
-        if(n == 1) return 1;
-      
-        if(fib[n] != 0)
-        {
-            return fib[n];
+
+    private int climbStairs(int n, Map<Integer, Integer> memo) {
+        if (memo.containsKey(n)) {
+            return memo.get(n);
         }
-        fib[n] = climbStairs(n-1) + climbStairs(n -2);
-        return fib[n];
+        memo.put(n, climbStairs(n - 1, memo) + climbStairs(n - 2, memo));
+        return memo.get(n);
     }
 }
-
-
-
