@@ -3,6 +3,7 @@ class Solution {
     public int climbStairs(int n) {
       fib[0] = 1;
       fib[1] = 1;
+      fib[2] = 2;
       return DFS(n);
         
     }
