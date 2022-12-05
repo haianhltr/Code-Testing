@@ -1,20 +1,23 @@
 class Solution {
-    int [] dp;
+    int [] fib;
     public int climbStairs(int n) {
-        dp = new int[n+1];
-        dp[0] = 1;
-        return dfs(n);
+      fib = new int[n+1];
+      fib[0] = 1;
+      return DFS(n);
+        
     }
-    
-    public int dfs(int n)
+    public int DFS(int n)
     {
-        if(n < 0)
-            return 0;
-        if(dp[n] != 0)
-            return dp[n];
-        else
+       if(n < 0) return 0;
+      
+        if(fib[n] != 0)
         {
-            return dp[n] = dfs(n-1) + dfs(n-2);
+            return fib[n];
         }
+        return fib[n] =  DFS(n-1) + DFS(n -2);
+       
     }
 }
+
+
+
