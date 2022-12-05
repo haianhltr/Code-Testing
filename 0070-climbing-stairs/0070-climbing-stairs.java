@@ -1,16 +1,20 @@
 class Solution {
+    int [] dp;
     public int climbStairs(int n) {
-        Map<Integer, Integer> memo = new HashMap<>();
-        memo.put(1, 1);
-        memo.put(2, 2);
-        return climbStairs(n, memo);
+        dp = new int[n+1];
+        dp[0] = 1;
+        return dfs(n);
     }
-
-    private int climbStairs(int n, Map<Integer, Integer> memo) {
-        if (memo.containsKey(n)) {
-            return memo.get(n);
+    
+    public int dfs(int n)
+    {
+        if(n < 0)
+            return 0;
+        if(dp[n] != 0)
+            return dp[n];
+        else
+        {
+            return dp[n] = dfs(n-1) + dfs(n-2);
         }
-        memo.put(n, climbStairs(n - 1, memo) + climbStairs(n - 2, memo));
-        return memo.get(n);
     }
 }
