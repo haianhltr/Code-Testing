@@ -15,7 +15,8 @@ class Solution {
         {
             return fib[n];
         }
-        return fib[n] =  DFS(n-1) + DFS(n -2);
+        fib[n] =  DFS(n-1) + DFS(n -2);
+        return fib[n];
        
     }
 }
