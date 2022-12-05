@@ -2,6 +2,7 @@ class Solution {
     int [] fib = new int[10000];
     public int climbStairs(int n) {
       fib[0] = 1;
+      fib[1] = 1;
       return DFS(n);
         
     }
