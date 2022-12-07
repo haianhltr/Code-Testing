@@ -11,25 +11,26 @@ class Solution {
     public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
         HashMap<TreeNode, Integer> hash = new HashMap();
         List<Integer> list = new ArrayList();
-        DFS(root, target, hash);
-        check(root, list, hash, 0, k);
+        fill(root, target, hash);
+        DFS(list, root, hash, k, 0);
         return list;
+        
     }
-    public void check(TreeNode root, List<Integer> list, HashMap<TreeNode, Integer> hash, int pos, int k)
+    
+    public void DFS(List<Integer> list, TreeNode root, HashMap<TreeNode, Integer> hash, int k, int current)
     {
         if(root == null) return;
-    
-        if(hash.containsKey(root)) pos = hash.get(root);
-            if(pos == k)
+        if(hash.containsKey(root))
         {
-            list.add(root.val);
-           
+            current = hash.get(root);
         }
-        check(root.left, list, hash, pos + 1, k);
-        check(root.right, list, hash, pos +1, k);
-     }
+        
+        if(current == k) list.add(root.val);
+        DFS(list, root.left, hash, k, current + 1);
+        DFS(list, root.right, hash, k, current + 1);
+    }
     
-    public int DFS(TreeNode root, TreeNode target, HashMap<TreeNode, Integer> hash)
+    public int fill(TreeNode root, TreeNode target, HashMap<TreeNode, Integer> hash)
     {
         if(root == null) return -1;
         if(root.val == target.val)
@@ -38,13 +39,13 @@ class Solution {
             return 0;
         }
         
-        int a = DFS(root.left, target, hash);
+        int a = fill(root.left, target, hash);
         if(a >= 0)
         {
             hash.put(root, a + 1);
             return a + 1;
         }
-        int b = DFS(root.right, target, hash);
+        int b = fill(root.right, target, hash);
         if(b >= 0)
         {
             hash.put(root, b + 1);
@@ -52,5 +53,6 @@ class Solution {
         }
         
         return -1;
+        
     }
 }
