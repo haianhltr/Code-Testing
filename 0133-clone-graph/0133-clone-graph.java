@@ -23,12 +23,13 @@ class Solution {
         HashMap<Node, Node> hash = new HashMap();
         if(node == null) return null;
         DFS(node, hash);
+    
         return hash.get(node);
+        
     }
     
     public void DFS(Node node, HashMap<Node, Node> hash)
     {
-        
         if(!hash.containsKey(node))
         {
             hash.put(node, new Node(node.val));
@@ -38,10 +39,10 @@ class Solution {
             return;
         }
         
-        for(Node n : node.neighbors)
+        for(Node nei : node.neighbors)
         {
-           DFS(n, hash);
-           hash.get(node).neighbors.add(hash.get(n));
+            DFS(nei, hash);
+            hash.get(node).neighbors.add(hash.get(nei));
         }
     }
 }
