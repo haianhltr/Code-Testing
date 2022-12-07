@@ -1,47 +1,48 @@
 class Solution {
+    Set<Integer> set = new HashSet();
     public boolean canFinish(int n, int[][] prerequisites) {
-        ArrayList<Integer> [] prereqs = new ArrayList[n];
-        int [] count = new int [n];
+        ArrayList<Integer> [] prereqs = new ArrayList [n];
         for(int k = 0; k < n; k++)
         {
             prereqs[k] = new ArrayList();
         }
         
+        int [] count = new int [n];
         for(int [] temp : prerequisites)
         {
             prereqs[temp[1]].add(temp[0]);
             count[temp[0]]++;
         }
         
-        boolean [] visited = new boolean[n];
-        
-        for(int k = 0; k < count.length; k++)
+        for(int k = 0; k < count.length;k++)
         {
-            if(count[k] == 0)
+            if(count[k] == 0) 
             {
-                if(!visited[k])
-                n = DFS(n, prereqs, count, visited, k);
+                if(!set.contains(k))
+                n = DFS(prereqs, count, n, k);
             }
         }
-        
         System.out.println(n);
-        return n == 0 ? true : false;
+        
+        return n == 0 ? true : false; 
     }
     
-    public int DFS(int n, ArrayList<Integer>[] prereqs, int [] count, boolean [] visited, int num)
+    public int DFS(ArrayList<Integer> [] prereqs, int [] count, int n, int num)
     {
+
+        set.add(num);
         n--;
-        visited[num] = true;
         if(prereqs[num].size() == 0) return n;
-        
         for(int nei : prereqs[num])
         {
+                
             count[nei]--;
-            if(count[nei] == 0) 
-            {
-              
-                n = DFS(n, prereqs, count, visited, nei);
+            if(count[nei] == 0){
+      
+                n = DFS(prereqs,count, n, nei);
+            
             }
+            
         }
         return n;
     }
