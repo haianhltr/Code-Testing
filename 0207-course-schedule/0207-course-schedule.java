@@ -22,7 +22,7 @@ class Solution {
                 n = DFS(prereqs, count, n, k);
             }
         }
-        System.out.println(n);
+  
         
         return n == 0 ? true : false; 
     }
@@ -38,7 +38,7 @@ class Solution {
                 
             count[nei]--;
             if(count[nei] == 0){
-      
+                if(!set.contains(nei))
                 n = DFS(prereqs,count, n, nei);
             
             }
