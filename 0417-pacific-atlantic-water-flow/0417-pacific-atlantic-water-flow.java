@@ -5,7 +5,7 @@ class Solution {
         List<List<Integer>> list = new ArrayList();
         boolean [][] pacific = new boolean[rows][columns];
         boolean [][] atlantic = new boolean [rows][columns];
-        for(int k=0 ; k < rows; k++)
+        for(int k = 0; k < rows; k++)
         {
             DFS(heights, pacific, k, 0, rows, columns, heights[k][0]);
             DFS(heights, atlantic, k, columns-1, rows, columns, heights[k][columns-1]);
@@ -21,13 +21,13 @@ class Solution {
         {
             for(int j = 0; j < columns; j++)
             {
-                if(pacific[k][j] == true && atlantic[k][j] == true) 
-                {
-                    list.add(Arrays.asList(new Integer [] {k,j}));
-                }
+                if(pacific[k][j] == true && atlantic[k][j] == true)
+                list.add(Arrays.asList(new Integer [] {k,j}));
             }
         }
         return list;
+        
+
     }
     
     public void DFS(int [][] heights, boolean [][] ocean, int row, int column, int rows, int columns, int prev)
@@ -38,6 +38,7 @@ class Solution {
         DFS(heights, ocean, row + 1, column, rows, columns, heights[row][column]);
         DFS(heights, ocean, row - 1, column, rows, columns, heights[row][column]);
         DFS(heights, ocean, row, column + 1, rows, columns, heights[row][column]);
-        DFS(heights, ocean, row, column-1, rows, columns, heights[row][column]);
+        DFS(heights, ocean, row, column - 1, rows, columns, heights[row][column]);
+        
     }
 }
