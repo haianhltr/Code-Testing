@@ -16,15 +16,15 @@
 class Solution {
     public int kthSmallest(TreeNode root, int k) {
         List<Integer> list = new ArrayList();
-        DFS(root, list);
+        DFS(list, root);
         return list.get(k-1);
     }
     
-    public void DFS(TreeNode root, List<Integer> list)
+    public void DFS(List<Integer> list, TreeNode root)
     {
         if(root == null) return;
-        DFS(root.left, list);
+        DFS(list, root.left);
         list.add(root.val);
-        DFS(root.right, list);
+        DFS(list, root.right);
     }
 }
