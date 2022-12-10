@@ -6,33 +6,33 @@ class Solution {
         {
             for(int j = 0; j < board[0].length; j++)
             {
-                DFS(board, k,j, root, list);
+                DFS(board, words, k, j, root, list);
             }
         }
         return list;
-        
     }
     
-    public void DFS(char [][] board, int r, int c, TrieNode p, List<String> list)
+    
+    public void DFS(char [][] board, String [] words, int row, int column, TrieNode p, List<String> list)
     {
-        if(r < 0 || r >= board.length || c < 0 || c >= board[0].length || board[r][c] == '#' || p.next[board[r][c]-'a'] == null) return;
-        char letter = board[r][c];
-        p = p.next[letter-'a'];
+        if(row < 0 || row >= board.length || column < 0 || column >= board[0].length || board[row][column] == '#' || p.next[board[row][column] - 'a'] == null )
+        {
+            return;
+        }
+        
+        char letter = board[row][column];
+        p = p.next[letter -'a'];
         if(p.word != null)
         {
             list.add(p.word);
             p.word = null;
         }
-        
-        
-        board[r][c]  ='#';
-        DFS(board, r + 1, c, p, list);
-        DFS(board, r - 1, c, p, list);
-        DFS(board, r, c + 1, p, list);
-        DFS(board, r, c - 1, p, list);
-        board[r][c] = letter;
-        
-        
+        board[row][column] = '#';
+        DFS(board, words, row + 1, column, p, list);
+        DFS(board,words, row - 1, column, p, list);
+        DFS(board, words, row, column + 1, p, list);
+        DFS(board, words, row, column - 1, p, list);
+        board[row][column] = letter;
     }
     
     public TrieNode buildTrie(String [] words)
@@ -43,12 +43,13 @@ class Solution {
             TrieNode temp = root;
             for(char c : w.toCharArray())
             {
-                int i = c  - 'a';
+                int i = c - 'a';
                 if(temp.next[i] == null) temp.next[i] = new TrieNode();
                 temp = temp.next[i];
             }
             temp.word = w;
         }
+        
         return root;
     }
     
