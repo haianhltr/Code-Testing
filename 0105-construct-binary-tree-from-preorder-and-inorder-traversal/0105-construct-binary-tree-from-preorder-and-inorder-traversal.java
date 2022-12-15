@@ -25,16 +25,14 @@ class Solution {
         int mid = left;
         for(int k = left; k <= right; k++)
         {
-            if(in[k] == pre[index])
-            {
-                mid = k;
-            }
+            if(pre[index] == in[k]) mid = k;
         }
+        
         
         TreeNode temp = new TreeNode(pre[index]);
         index++;
         temp.left = DFS(pre, in, left, mid -1);
-        temp.right = DFS(pre,in, mid + 1, right);
+        temp.right = DFS(pre, in, mid + 1, right);
         return temp;
     }
 }
