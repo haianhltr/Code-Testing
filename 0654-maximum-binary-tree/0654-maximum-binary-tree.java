@@ -23,16 +23,16 @@ class Solution {
     {
         if(left > right) return null;
         int mid = left;
-        int max = nums[mid];
+
         for(int k = left; k <= right; k++)
         {
-            if(nums[k] > max) 
+            if(nums[k] > nums[mid]) 
             {
                 mid = k;
-                max = nums[k];
+         
             }
         }
-        TreeNode temp = new TreeNode(max);
+        TreeNode temp = new TreeNode(nums[mid]);
         temp.left = DFS(nums, left, mid - 1);
         temp.right = DFS(nums, mid + 1, right );
         return temp;
