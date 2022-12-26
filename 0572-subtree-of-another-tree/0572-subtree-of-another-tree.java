@@ -19,17 +19,14 @@ class Solution {
         if(root.val == subRoot.val)
         {
             if(DFS(root, subRoot))
-            {
                 return true;
-            }
         }
         
         return isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot);
     }
-    
     public boolean DFS(TreeNode p, TreeNode q)
     {
-        if(p == null && q== null) return true;
+        if(p == null && q == null) return true;
         if(p == null || q == null) return false;
         if(p.val != q.val) return false;
         return DFS(p.left, q.left) && DFS(p.right, q.right);
