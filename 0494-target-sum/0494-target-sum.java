@@ -1,22 +1,32 @@
 class Solution {
-    int count = 0;
+    int total;
     public int findTargetSumWays(int[] nums, int target) {
-        DFS(nums, target, 0, 0);
-        return count;
+        total = Arrays.stream(nums).sum();
+        int [][] dp = new int[nums.length][2 * total + 1];
+        for(int [] rows : dp)
+        {
+            Arrays.fill(rows, Integer.MIN_VALUE);
+        }
+        
+        return calc(nums, target, 0, 0, dp);
     }
     
-    public void DFS(int [] nums, int target, int pos, int sum)
+    public int calc(int [] nums, int target, int sum, int index, int [][] dp)
     {
-        if(pos == nums.length)
+        if(index == nums.length)
         {
             if(sum == target)
             {
-                count++;
+                return 1;
             }
-            return;
+            else{
+                return 0;
+            }
         }
         
-        DFS(nums, target, pos + 1, sum + nums[pos]);
-        DFS(nums, target, pos +1 , sum - nums[pos]);
+        int add = calc(nums, target, sum + nums[index], index + 1,dp);
+        int sub = calc(nums,target, sum - nums[index], index + 1, dp);
+        dp[index][sum + total] = add + sub;
+        return dp[index][sum + total];
     }
 }
