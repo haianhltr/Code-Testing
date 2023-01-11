@@ -1,34 +1,47 @@
 class Solution {
     public int lengthOfLIS(int[] nums) {
-        int [] dp = new int[nums.length + 1];
-        Arrays.fill(dp, -1);
-        int length = 1;
-        for(int k = 0; k < nums.length; k++)
+        int length = 1; 
+        ArrayList<Integer> dp = new ArrayList();
+        dp.add(0);
+        for(int i = 1; i < nums.length; i++)
         {
-            length = Math.max(length, LIS(nums, k, dp));
+            if(nums[i] <= nums[dp.get(0)])
+            {
+               dp.set(0,i);
+            }
+            else if(nums[i] > nums[dp.get(length-1)])
+            {
+                dp.add(i);
+                length++;
+            }
+            else{
+                int pos = lowerBound(nums, dp, length, nums[i]);
+                dp.set(pos, i);
+            }
         }
-        
-        return length;
-        
+                                   return length;
     }
     
-    public int LIS(int [] nums, int len, int [] dp)
+    
+    public static int lowerBound(int [] nums, ArrayList<Integer> dp, int len, int num)
     {
-        if(len == 0)
-            return 1;
-        if(dp[len] != -1)
+        int left = 0; 
+        int right = len;
+        int pos = len;
+        while(left < right)
         {
-            return dp[len];
+            int mid = left + (right - left)/2;
+            int index = dp.get(mid);
+            if(nums[index] >= num)
+            {
+                pos = mid;
+                right = mid;
+            }
+            else
+            {
+                left = mid + 1;
+            }
         }
-        int length = 1;
-        for(int k = len -1; k >= 0; k--)
-        {
-            if(nums[len] > nums[k])
-            length = Math.max(length, LIS(nums, k, dp) + 1);
-        }
-        
-        dp[len] = length;
-        return dp[len];
-        
+        return pos;
     }
 }
