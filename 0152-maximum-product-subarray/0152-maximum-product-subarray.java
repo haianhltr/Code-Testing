@@ -1,24 +1,16 @@
 class Solution {
     public int maxProduct(int[] nums) {
-        int ans = Arrays.stream(nums).max().getAsInt();
-        int max = 1;
-        int min = 1;
-        for(int k = 0 ; k < nums.length; k++)
+        int max = nums[0];
+        int currentMax = nums[0];
+        int currentMin = nums[0];
+
+        for(int k = 1; k < nums.length; k++)
         {
-            if(nums[k] == 0) 
-            {
-                max = 1;
-                min = 1;
-                continue;
-            }
-            
-            int temp = max;
-            max = Math.max(Math.max(max * nums[k], min * nums[k]), nums[k]);
-            min = Math.min(Math.min(temp * nums[k], min * nums[k]), nums[k]);
-            ans = Math.max(ans, max);
+            int temp = currentMax;
+            currentMax = Math.max(Math.max(nums[k] * currentMax, nums[k] * currentMin), nums[k]);
+            currentMin = Math.min(Math.min(nums[k] * temp, nums[k] * currentMin), nums[k]);
+            max = Math.max(max, currentMax);
         }
-return ans;
+        return max;
     }
 }
-
-     
